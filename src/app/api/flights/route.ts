@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { getMockFlights, IS_MOCK_MODE } from '@/lib/mock-flights';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -8,6 +9,11 @@ export async function GET(req: NextRequest) {
 
   if (!airport || !date) {
     return NextResponse.json({ error: 'airport and date required' }, { status: 400 });
+  }
+
+  if (IS_MOCK_MODE) {
+    const flights = getMockFlights(date);
+    return NextResponse.json({ flights, mock: true });
   }
 
   const { data, error } = await supabase
