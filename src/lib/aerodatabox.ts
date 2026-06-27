@@ -30,21 +30,24 @@ export async function fetchArrivals(airportIata: string, date: string) {
   const apiKey = process.env.AERODATABOX_API_KEY;
   if (!apiKey) throw new Error('AERODATABOX_API_KEY not set');
 
-  const from = `${date}T00:00`;
-  const to   = `${date}T23:59`;
-  const url  = `https://aerodatabox.p.rapidapi.com/flights/airports/iata/${airportIata}/${from}/${to}?withLeg=true&direction=Arrival&withCancelled=false&withCodeshared=false&withCargo=false&withPrivate=false`;
+  const headers = {
+    'X-RapidAPI-Key':  apiKey,
+    'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com',
+  };
+  const params = 'withLeg=true&direction=Arrival&withCancelled=false&withCodeshared=false&withCargo=false&withPrivate=false';
+  const base = `https://aerodatabox.p.rapidapi.com/flights/airports/iata/${airportIata}`;
 
-  const res = await fetch(url, {
-    headers: {
-      'X-RapidAPI-Key':  apiKey,
-      'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com',
-    },
-  });
+  // AeroDataBox 최대 12시간 범위 → 오전/오후로 나눠 2번 호출
+  const [res1, res2] = await Promise.all([
+    fetch(`${base}/${date}T00:00/${date}T11:59?${params}`, { headers }),
+    fetch(`${base}/${date}T12:00/${date}T23:59?${params}`, { headers }),
+  ]);
 
-  if (!res.ok) throw new Error(`AeroDataBox error: ${res.status}`);
+  if (!res1.ok) throw new Error(`AeroDataBox error: ${res1.status}`);
+  if (!res2.ok) throw new Error(`AeroDataBox error: ${res2.status}`);
 
-  const json: AeroResponse = await res.json();
-  const arrivals = json.arrivals ?? [];
+  const [json1, json2]: [AeroResponse, AeroResponse] = await Promise.all([res1.json(), res2.json()]);
+  const arrivals = [...(json1.arrivals ?? []), ...(json2.arrivals ?? [])];
 
   return arrivals.map(f => ({
     airport_iata: airportIata,
