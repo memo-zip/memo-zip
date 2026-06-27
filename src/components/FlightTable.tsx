@@ -30,68 +30,75 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
       <div className="px-4 py-3 flex items-center justify-between border-b border-gray-100">
         <div className="flex items-center gap-2">
           <span className="font-bold text-gray-900 text-sm">다낭 도착 항공편 실시간 스케줄</span>
-          <span className="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded">LIVE</span>
+          <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">LIVE</span>
         </div>
         {lastUpdated && (
-          <span className="text-xs text-gray-400">마지막 업데이트 {lastUpdated} 🔄</span>
+          <span className="text-[10px] text-gray-400">마지막 업데이트 {lastUpdated}</span>
         )}
       </div>
 
-      {/* 테이블 헤더 */}
-      <div className="grid grid-cols-[60px_1fr_70px_60px_50px_70px_70px] gap-1 px-3 py-2 bg-gray-50 text-xs text-gray-400 font-medium">
-        <span>도착시간</span>
-        <span>항공사</span>
-        <span>편명</span>
-        <span>기종</span>
-        <span>좌석수</span>
-        <span>예상 대기</span>
-        <span>패스트트랙</span>
-      </div>
-
-      {/* 행 */}
-      <div className="divide-y divide-gray-50">
-        {rows.map((row) => {
-          const isSelected = row.flight.id === selectedFlightId;
-          return (
-            <div
-              key={row.flight.id}
-              className={`grid grid-cols-[60px_1fr_70px_60px_50px_70px_70px] gap-1 px-3 py-2.5 items-center text-xs transition-colors ${
-                isSelected ? 'bg-red-50' : ''
-              }`}
-            >
-              <span className={`font-bold ${isSelected ? 'text-red-500' : 'text-gray-700'}`}>
-                {formatTime(row.flight.scheduled_arrival)}
-              </span>
-              <div className="flex items-center gap-1 min-w-0">
-                <span className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-[9px] font-bold text-gray-600 flex-shrink-0">
-                  {row.flight.airline_iata}
-                </span>
-                <span className="text-gray-600 truncate">{row.flight.airline_name}</span>
-              </div>
-              <span className={`font-semibold ${isSelected ? 'text-red-500' : 'text-gray-700'}`}>
-                {row.flight.flight_number}
-              </span>
-              <span className="text-gray-500">{row.flight.aircraft_type}</span>
-              <span className="text-gray-500">{row.flight.seat_capacity}석</span>
-              <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>
-                {row.waitMin}~{row.waitMax}분
-              </span>
-              <div>
-                <CongestionBadge level={row.level} size="sm" />
-              </div>
-            </div>
-          );
-        })}
+      {/* 테이블 */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="bg-gray-50 text-gray-400 font-medium">
+              <th className="text-left px-3 py-2 w-14">도착시간</th>
+              <th className="text-left px-2 py-2">항공사</th>
+              <th className="text-left px-2 py-2 w-16">편명</th>
+              <th className="text-left px-2 py-2 w-14">기종</th>
+              <th className="text-right px-2 py-2 w-12">좌석수</th>
+              <th className="text-center px-2 py-2 w-16">예상 대기</th>
+              <th className="text-center px-2 py-2 w-16">패스트트랙</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-50">
+            {rows.map((row) => {
+              const isSelected = row.flight.id === selectedFlightId;
+              return (
+                <tr key={row.flight.id} className={isSelected ? 'bg-red-50' : ''}>
+                  <td className="px-3 py-2.5">
+                    <span className={`font-bold ${isSelected ? 'text-red-500' : 'text-gray-700'}`}>
+                      {formatTime(row.flight.scheduled_arrival)}
+                    </span>
+                  </td>
+                  <td className="px-2 py-2.5">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center text-[8px] font-bold text-gray-500 flex-shrink-0">
+                        {row.flight.airline_iata}
+                      </span>
+                      <span className="text-gray-600 truncate max-w-[70px]">{row.flight.airline_name}</span>
+                    </div>
+                  </td>
+                  <td className="px-2 py-2.5">
+                    <span className={`font-semibold ${isSelected ? 'text-red-500' : 'text-gray-700'}`}>
+                      {row.flight.flight_number}
+                    </span>
+                  </td>
+                  <td className="px-2 py-2.5 text-gray-500">{row.flight.aircraft_type}</td>
+                  <td className="px-2 py-2.5 text-gray-500 text-right">{row.flight.seat_capacity}석</td>
+                  <td className="px-2 py-2.5 text-center">
+                    <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>
+                      {row.waitMin}~{row.waitMax}분
+                    </span>
+                  </td>
+                  <td className="px-2 py-2.5 text-center">
+                    <CongestionBadge level={row.level} size="sm" />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
 
       {/* 하단 요약 */}
-      <div className="border-t border-gray-100 px-4 py-3 flex justify-between items-center bg-gray-50">
-        <div className="flex items-center gap-1.5">
-          <span className="text-gray-500 text-xs">총 입국 예상 인원 ({formatTime(windowStart)} ~ {formatTime(windowEnd)} 도착편 합계)</span>
+      <div className="border-t border-gray-100 px-4 py-3 bg-gray-50">
+        <div className="flex justify-between items-center text-xs text-gray-500">
+          <span>총 입국 예상 인원 ({formatTime(windowStart)} ~ {formatTime(windowEnd)} 도착편 합계)</span>
+          <span className="font-bold text-gray-900 ml-2">{totalPax.toLocaleString()}명</span>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="font-bold text-gray-900">{totalPax.toLocaleString()}명</span>
-          <span className="text-xs text-gray-500">혼잡 시간대 {formatTime(windowStart)} ~ {formatTime(windowEnd)}</span>
+        <div className="text-xs text-gray-400 mt-1">
+          혼잡 시간대 {formatTime(windowStart)} ~ {formatTime(windowEnd)}
         </div>
       </div>
     </div>
