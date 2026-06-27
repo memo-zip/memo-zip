@@ -83,18 +83,14 @@ export default function Home() {
       <div className="max-w-lg mx-auto px-4 pt-6 space-y-4">
 
         {/* 헤더 */}
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-lg font-black text-gray-900">메모집 🧳</span>
-            </div>
+            <span className="text-lg font-black text-gray-900">메모집 🧳</span>
             <h1 className="text-xl font-black text-gray-900 leading-tight">다낭 패스트트랙 필요할까?</h1>
             <p className="text-xs text-gray-400 mt-0.5">실시간 입국 대기시간 예측 서비스</p>
           </div>
-          <div className="text-right">
-            <div className="text-[10px] text-gray-400 border border-gray-200 rounded px-2 py-1 flex items-center gap-1">
-              🔒 <span>무단 공유·복제 금지</span>
-            </div>
+          <div className="text-[10px] text-gray-400 border border-gray-200 rounded-lg px-2 py-1 flex items-center gap-1 self-start mt-1 whitespace-nowrap">
+            🔒 무단 공유·복제 금지
           </div>
         </div>
 
