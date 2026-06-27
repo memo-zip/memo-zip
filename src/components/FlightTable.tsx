@@ -81,8 +81,10 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                       {row.waitMin}~{row.waitMax}분
                     </span>
                   </td>
-                  <td className="px-2 py-2.5 text-center">
-                    <CongestionBadge level={row.level} size="sm" />
+                  <td className="px-2 py-2.5">
+                    <div className="flex justify-center">
+                      <CongestionBadge level={row.level} size="sm" />
+                    </div>
                   </td>
                 </tr>
               );
