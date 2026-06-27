@@ -1,16 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import AirportSelector from '@/components/AirportSelector';
 import FlightList from '@/components/FlightList';
 import CongestionResultCard from '@/components/CongestionResult';
 import { Flight, CongestionResult } from '@/types';
 
-type Step = 'airport' | 'date' | 'flight' | 'result';
+const AIRPORT = 'DAD';
+
+type Step = 'date' | 'flight' | 'result';
 
 export default function Home() {
-  const [step, setStep] = useState<Step>('airport');
-  const [airport, setAirport] = useState('');
+  const [step, setStep] = useState<Step>('date');
   const [date, setDate] = useState('');
   const [flights, setFlights] = useState<Flight[]>([]);
   const [selectedFlightId, setSelectedFlightId] = useState<string | null>(null);
@@ -26,7 +26,7 @@ export default function Home() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`/api/flights?airport=${airport}&date=${date}`);
+      const res = await fetch(`/api/flights?airport=${AIRPORT}&date=${date}`);
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
       setFlights(json.flights);
@@ -58,8 +58,7 @@ export default function Home() {
   }
 
   function reset() {
-    setStep('airport');
-    setAirport('');
+    setStep('date');
     setDate('');
     setFlights([]);
     setSelectedFlightId(null);
@@ -72,10 +71,12 @@ export default function Home() {
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-md mx-auto px-4 py-8 space-y-6">
         {/* 헤더 */}
-        <div className="text-center space-y-1">
-          <div className="text-3xl">✈️</div>
+        <div className="text-center space-y-2">
+          <div className="text-4xl">✈️</div>
           <h1 className="text-xl font-bold text-gray-900">패스트트랙 필요할까?</h1>
-          <p className="text-sm text-gray-500">메모집</p>
+          <div className="inline-block bg-blue-100 text-blue-700 text-sm font-semibold px-3 py-1 rounded-full">
+            다낭 (DAD) 입국장
+          </div>
         </div>
 
         {/* 에러 */}
@@ -85,28 +86,10 @@ export default function Home() {
           </div>
         )}
 
-        {/* Step 1: 공항 선택 */}
-        {step === 'airport' && (
-          <div className="space-y-4">
-            <h2 className="font-semibold text-gray-700">1. 도착 공항을 선택하세요</h2>
-            <AirportSelector value={airport} onChange={setAirport} />
-            <button
-              disabled={!airport}
-              onClick={() => setStep('date')}
-              className="w-full rounded-xl bg-blue-600 py-4 font-semibold text-white disabled:opacity-40 hover:bg-blue-700 transition-colors"
-            >
-              다음
-            </button>
-          </div>
-        )}
-
-        {/* Step 2: 날짜 선택 */}
+        {/* Step 1: 날짜 선택 */}
         {step === 'date' && (
           <div className="space-y-4">
-            <button onClick={() => setStep('airport')} className="text-sm text-gray-500">
-              ← 공항 다시 선택
-            </button>
-            <h2 className="font-semibold text-gray-700">2. 도착 날짜를 선택하세요</h2>
+            <h2 className="font-semibold text-gray-700">도착 날짜를 선택하세요</h2>
             <input
               type="date"
               value={date}
@@ -124,20 +107,19 @@ export default function Home() {
           </div>
         )}
 
-        {/* Step 3: 항공편 선택 */}
+        {/* Step 2: 항공편 선택 */}
         {step === 'flight' && (
           <div className="space-y-4">
             <button onClick={() => setStep('date')} className="text-sm text-gray-500">
               ← 날짜 다시 선택
             </button>
-            <h2 className="font-semibold text-gray-700">3. 내 항공편을 선택하세요</h2>
+            <h2 className="font-semibold text-gray-700">내 항공편을 선택하세요</h2>
             <FlightList
               flights={flights}
               selectedId={selectedFlightId}
               onSelect={setSelectedFlightId}
             />
 
-            {/* 아이 동반 옵션 */}
             <label className="flex items-center gap-3 rounded-xl border-2 border-gray-100 bg-white p-4 cursor-pointer">
               <input
                 type="checkbox"
@@ -158,7 +140,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Step 4: 결과 */}
+        {/* Step 3: 결과 */}
         {step === 'result' && result && (
           <div className="space-y-4">
             <CongestionResultCard result={result} />
