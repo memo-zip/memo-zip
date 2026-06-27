@@ -76,10 +76,17 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                   </td>
                   <td className="px-2 py-2.5 text-gray-500">{row.flight.aircraft_type}</td>
                   <td className="px-2 py-2.5 text-gray-500 text-right">{row.flight.seat_capacity}석</td>
-                  <td className="px-2 py-2.5 text-center">
-                    <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>
-                      {row.waitMin}~{row.waitMax}분
-                    </span>
+                  <td className="px-2 py-2.5">
+                    <div className="flex items-center justify-center gap-1">
+                      <span className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                        row.level === 'green' ? 'bg-green-500' :
+                        row.level === 'yellow' ? 'bg-yellow-400' :
+                        row.level === 'orange' ? 'bg-orange-500' : 'bg-red-500'
+                      }`} />
+                      <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>
+                        {row.waitMin}~{row.waitMax}분
+                      </span>
+                    </div>
                   </td>
                   <td className="px-2 py-2.5">
                     <div className="flex justify-center">
