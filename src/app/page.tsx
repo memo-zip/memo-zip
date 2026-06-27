@@ -282,11 +282,10 @@ export default function Home() {
 
             {/* 저작권 */}
             <div className="text-center space-y-1 pt-2">
-              <div className="text-[10px] text-gray-400 bg-gray-100 rounded-xl px-4 py-2">
-                🚫 무단 캡처 및 공유, 복제, 2차 가공을 금지합니다.<br />
-                메모집의 모든 콘텐츠는 직접 수집·분석한 데이터로, 무단 사용 시 법적 조치를 받을 수 있습니다.
+              <div className="text-[10px] text-gray-400 bg-gray-100 rounded-xl px-4 py-2 leading-5">
+                <p>🚫 무단 캡처 및 공유, 복제, 2차 가공을 금지합니다.</p>
+                <p>© MEMOZIP. All rights reserved.</p>
               </div>
-              <p className="text-[10px] text-gray-400">© MEMOZIP. All rights reserved.</p>
             </div>
           </div>
         )}
