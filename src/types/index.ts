@@ -20,10 +20,20 @@ export interface Flight {
   flight_date: string;
 }
 
+export interface FlightCongestion {
+  flight: Flight;
+  level: CongestionLevel;
+  label: string;
+  totalPax: number;
+  waitMin: number;
+  waitMax: number;
+  windowStart: string;
+  windowEnd: string;
+}
+
 export interface CongestionResult {
   level: CongestionLevel;
   label: string;
-  emoji: string;
   totalPax: number;
   windowStart: string;
   windowEnd: string;
@@ -32,4 +42,8 @@ export interface CongestionResult {
   estimatedWaitMin: number;
   estimatedWaitMax: number;
   isNightFlight: boolean;
+  score: number;
+  flightRows: FlightCongestion[];
+  hasChildren: boolean;
+  childrenLevel: string;
 }
