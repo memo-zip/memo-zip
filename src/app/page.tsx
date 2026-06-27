@@ -100,11 +100,11 @@ export default function Home() {
 
         {/* 입력 카드 */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 space-y-3">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 items-start">
             {/* 날짜 선택 */}
-            <div>
-              <label className="text-xs text-gray-500 font-medium mb-1 block">📅 방문 날짜 선택</label>
-              <div className="relative">
+            <div className="flex flex-col">
+              <label className="text-xs text-gray-500 font-medium mb-1.5 block">📅 방문 날짜 선택</label>
+              <div className="relative flex-1">
                 <input
                   type="date"
                   value={date}
@@ -113,21 +113,23 @@ export default function Home() {
                     setDate(e.target.value);
                     if (e.target.value) loadFlights(e.target.value);
                   }}
-                  className="w-full rounded-xl border-2 border-gray-200 px-3 py-2.5 text-sm text-gray-800 focus:border-red-400 focus:outline-none appearance-none"
+                  className="w-full rounded-xl border-2 border-gray-200 px-3 py-3 text-sm text-gray-800 focus:border-red-400 focus:outline-none appearance-none"
                 />
               </div>
-              {date && <p className="text-xs text-gray-400 mt-1">{formatDate(date)}</p>}
+              <p className="text-xs text-gray-400 mt-1.5 h-4">
+                {date ? formatDate(date) : ''}
+              </p>
             </div>
 
             {/* 항공편 선택 */}
-            <div>
-              <label className="text-xs text-gray-500 font-medium mb-1 block">✈️ 내 비행편 선택 (편명 입력 또는 선택)</label>
-              <div className="relative">
+            <div className="flex flex-col">
+              <label className="text-xs text-gray-500 font-medium mb-1.5 block">✈️ 내 비행편 선택</label>
+              <div className="relative flex-1">
                 <select
                   value={selectedFlightId}
                   onChange={(e) => setSelectedFlightId(e.target.value)}
                   disabled={!flightsLoaded || loadingFlights}
-                  className="w-full rounded-xl border-2 border-gray-200 px-3 py-2.5 text-sm text-gray-800 focus:border-red-400 focus:outline-none disabled:bg-gray-50 disabled:text-gray-400 appearance-none pr-8"
+                  className="w-full rounded-xl border-2 border-gray-200 px-3 py-3 text-sm text-gray-800 focus:border-red-400 focus:outline-none disabled:bg-gray-50 disabled:text-gray-400 appearance-none pr-8"
                 >
                   <option value="">{loadingFlights ? '불러오는 중...' : '항공편 선택'}</option>
                   {flights.map((f) => (
@@ -138,9 +140,9 @@ export default function Home() {
                 </select>
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">▾</span>
               </div>
-              {selectedFlight && (
-                <p className="text-xs text-gray-400 mt-1">{formatTime(selectedFlight.scheduled_arrival)} 도착</p>
-              )}
+              <p className="text-xs text-gray-400 mt-1.5 h-4">
+                {selectedFlight ? `${formatTime(selectedFlight.scheduled_arrival)} 도착` : ''}
+              </p>
             </div>
           </div>
 
