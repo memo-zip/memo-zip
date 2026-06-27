@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Flight } from '@/types';
 
 // 다낭 도착 주요 항공사 + 기종 참고 데이터
@@ -56,8 +57,9 @@ export default function AdminPage() {
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (authed) loadFlights();
+    if (authed) loadFlights(); // eslint-disable-line react-hooks/set-state-in-effect
   }, [authed, date]);
 
   async function addFlight() {
@@ -130,7 +132,7 @@ export default function AdminPage() {
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-bold text-gray-900">✈️ 다낭 항공편 관리</h1>
-          <a href="/" className="text-sm text-blue-600">← 서비스로</a>
+          <Link href="/" className="text-sm text-blue-600">← 서비스로</Link>
         </div>
 
         {/* 날짜 선택 */}

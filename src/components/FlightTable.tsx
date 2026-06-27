@@ -2,7 +2,6 @@
 
 import { FlightCongestion, CongestionLevel } from '@/types';
 import { THRESHOLDS } from '@/lib/congestion';
-import CongestionBadge from './CongestionBadge';
 
 const WAIT_COLORS: Record<CongestionLevel, string> = {
   green:  'text-green-600',
