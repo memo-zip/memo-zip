@@ -3,7 +3,7 @@ import { CongestionLevel, CongestionResult, FlightCongestion, Flight } from '@/t
 export const THRESHOLDS: Record<CongestionLevel, {
   label: string; waitMin: number; waitMax: number; color: string; bgColor: string;
 }> = {
-  green:  { label: '필요 없음',  waitMin: 0,  waitMax: 20, color: 'text-green-600',  bgColor: 'bg-green-500'  },
+  green:  { label: '혼잡 없음',  waitMin: 0,  waitMax: 20, color: 'text-green-600',  bgColor: 'bg-green-500'  },
   yellow: { label: '애매함',     waitMin: 20, waitMax: 40, color: 'text-yellow-500', bgColor: 'bg-yellow-400' },
   orange: { label: '추천',       waitMin: 40, waitMax: 60, color: 'text-orange-500', bgColor: 'bg-orange-500' },
   red:    { label: '강력 추천',  waitMin: 60, waitMax: 90, color: 'text-red-500',    bgColor: 'bg-red-500'    },

@@ -257,7 +257,7 @@ export default function Home() {
                       {THRESHOLDS[level].waitMin}~{THRESHOLDS[level].waitMax === 90 ? '60' : THRESHOLDS[level].waitMax}분
                     </div>
                     <div className="text-[10px] text-gray-400">
-                      {level === 'green' ? '일반 입국 추천' :
+                      {level === 'green' ? '빠르게 입국 가능' :
                        level === 'yellow' ? '아이 없으면 비추천' :
                        level === 'orange' ? '아이 동반·밤 도착 시 추천' :
                        '가족여행 강력 추천'}
