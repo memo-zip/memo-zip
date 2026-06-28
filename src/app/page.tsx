@@ -91,17 +91,17 @@ export default function Home() {
   const selectedFlight = flights.find((f) => f.id === selectedFlightId);
 
   const LEVEL_LABELS: Record<string, string> = {
-    best:      '대기 없이 빠르게 입국할 수 있어요.',
-    good:      '패스트트랙 없이도 여유롭게 입국할 수 있어요.',
+    best:      '아이와 함께여도 여유롭게 입국할 수 있어요.',
+    good:      '아이와 함께여도 크게 불편하지 않아요.',
     normal:    '아이 동반이라면 패스트트랙을 고려해보세요.',
-    busy:      '동시간대 입국 인원이 많아 패스트트랙을 추천드려요.',
-    very_busy: '동시간대 입국 인원이 매우 많아 대기 시간이 길 것으로 예상돼요.',
+    busy:      '아이와 긴 줄에 서는 것보다 패스트트랙을 추천해요.',
+    very_busy: '아이 동반 가족여행이라면 패스트트랙이 필수예요.',
   };
 
   const RECOMMENDATION_BADGE: Record<string, { emoji: string; label: string; bg: string; text: string }> = {
     best:      { emoji: '💸', label: '패스트트랙 비추천', bg: 'bg-gray-100',   text: 'text-gray-500'   },
     good:      { emoji: '💸', label: '패스트트랙 비추천', bg: 'bg-gray-100',   text: 'text-gray-500'   },
-    normal:    { emoji: '🤔', label: '선택사항',          bg: 'bg-yellow-100', text: 'text-yellow-700' },
+    normal:    { emoji: '🤔', label: '아이 있으면 추천',   bg: 'bg-yellow-100', text: 'text-yellow-700' },
     busy:      { emoji: '👍', label: '추천',              bg: 'bg-orange-100', text: 'text-orange-600' },
     very_busy: { emoji: '🔥', label: '강력추천',          bg: 'bg-red-100',    text: 'text-red-600'    },
   };
