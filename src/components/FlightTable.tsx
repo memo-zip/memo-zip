@@ -85,7 +85,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                   {row.flight.airline_name}
                 </div>
                 <div className="text-[10px] text-gray-400 mt-0.5 truncate">
-                  {row.flight.departure_city ?? ''}
+                  {row.flight.departure_city ?? ''} · {row.flight.aircraft_type}
                 </div>
               </div>
 
