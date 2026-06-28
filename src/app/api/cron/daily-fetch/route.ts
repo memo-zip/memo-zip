@@ -26,7 +26,7 @@ export async function GET(req: Request) {
 
   for (let i = 0; i < dates.length; i++) {
     const date = dates[i];
-    if (i > 0) await new Promise(r => setTimeout(r, 4000));
+    if (i > 0) await new Promise(r => setTimeout(r, 8000));
     try {
       const raw = await fetchArrivals('DAD', date);
       const seen = new Set<string>();
