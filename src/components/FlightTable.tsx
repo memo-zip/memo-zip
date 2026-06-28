@@ -67,7 +67,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                     <span className="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center text-[7px] font-bold text-gray-500 flex-shrink-0">
                       {row.flight.airline_iata}
                     </span>
-                    <span className="text-gray-600 truncate max-w-[52px]">{row.flight.airline_name}</span>
+                    <span className="text-gray-600">{row.flight.airline_name}</span>
                   </div>
                 </td>
                 <td className="px-1 py-2">
