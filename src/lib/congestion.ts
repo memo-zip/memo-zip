@@ -10,9 +10,9 @@ export const THRESHOLDS: Record<CongestionLevel, {
 };
 
 export function getLevel(pax: number): CongestionLevel {
-  if (pax <= 300) return 'green';
-  if (pax <= 600) return 'yellow';
-  if (pax <= 900) return 'orange';
+  if (pax <= 900) return 'green';
+  if (pax <= 1300) return 'yellow';
+  if (pax <= 1700) return 'orange';
   return 'red';
 }
 
