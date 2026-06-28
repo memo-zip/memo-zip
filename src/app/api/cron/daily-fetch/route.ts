@@ -1,5 +1,5 @@
-// Vercel Cron: 매주 일요일 UTC 15:00 (베트남 자정 +7) 실행
-// AeroDataBox로 오늘~14일 후 다낭 도착편 수집 + 파라타항공 자동 추가
+// Vercel Cron: 매일 UTC 15:00 (베트남 자정 +7) 실행
+// AeroDataBox로 14일 후 다낭 도착편 수집 + 파라타항공 자동 추가
 import { NextResponse } from 'next/server';
 import { fetchArrivals } from '@/lib/aerodatabox';
 import { supabaseAdmin } from '@/lib/supabase';
@@ -39,7 +39,7 @@ export async function GET(req: Request) {
 
   const dates = dateParam
     ? [dateParam]
-    : Array.from({ length: 14 }, (_, i) => getDateStr(i));
+    : [getDateStr(14)];
 
   const results: Record<string, unknown> = {};
 
