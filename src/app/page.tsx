@@ -291,8 +291,8 @@ export default function Home() {
                     best:      '일반입국 추천',
                     good:      '일반입국 추천',
                     normal:    '아이있으면 고려',
-                    busy:      '아이동반·밤도착 시 추천',
-                    very_busy: '가족여행 강력추천',
+                    busy:      '아이동반·밤도착추천',
+                    very_busy: '가족여행강력추천',
                   }[level];
                   return (
                     <div key={level} className="flex flex-col items-center gap-1">

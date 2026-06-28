@@ -84,8 +84,8 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                 <div className={`text-xs font-bold truncate ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
                   {row.flight.airline_name}
                 </div>
-                <div className="text-[10px] text-gray-400 mt-0.5 truncate">
-                  {row.flight.departure_city ?? ''} · {row.flight.aircraft_type}
+                <div className="text-[10px] text-gray-400 mt-0.5 truncate flex items-center justify-center gap-0.5">
+                  {row.flight.departure_city ?? ''} · ✈️ {row.flight.aircraft_type}
                 </div>
               </div>
 
