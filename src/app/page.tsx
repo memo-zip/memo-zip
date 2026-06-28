@@ -79,6 +79,14 @@ export default function Home() {
     very_busy: '동시간대 입국 인원이 매우 많아 대기 시간이 길 것으로 예상돼요.',
   };
 
+  const RECOMMENDATION_BADGE: Record<string, { emoji: string; label: string; bg: string; text: string }> = {
+    best:      { emoji: '💸', label: '패스트트랙 비추천', bg: 'bg-gray-100',   text: 'text-gray-500'   },
+    good:      { emoji: '💸', label: '패스트트랙 비추천', bg: 'bg-gray-100',   text: 'text-gray-500'   },
+    normal:    { emoji: '🤔', label: '선택사항',          bg: 'bg-yellow-100', text: 'text-yellow-700' },
+    busy:      { emoji: '👍', label: '추천',              bg: 'bg-orange-100', text: 'text-orange-600' },
+    very_busy: { emoji: '🔥', label: '강력추천',          bg: 'bg-red-100',    text: 'text-red-600'    },
+  };
+
   return (
     <main className="min-h-screen bg-gray-50 pb-16">
       <div className="max-w-lg mx-auto px-4 pt-6 space-y-4">
@@ -211,8 +219,13 @@ export default function Home() {
                   result.level === 'normal' ? 'bg-yellow-50' : 'bg-green-50'
                 }`}>
                   <p className="text-xs text-gray-500 mb-2">오늘 패스트트랙은?</p>
-                  <div className="flex justify-center mb-1">
+                  <div className="flex justify-center mb-2">
                     <CongestionBadge level={result.level} size="lg" />
+                  </div>
+                  <div className="flex justify-center mb-1">
+                    <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full ${RECOMMENDATION_BADGE[result.level].bg} ${RECOMMENDATION_BADGE[result.level].text}`}>
+                      {RECOMMENDATION_BADGE[result.level].emoji} {RECOMMENDATION_BADGE[result.level].label}
+                    </span>
                   </div>
                   <p className="text-[10px] text-gray-500 leading-tight mt-1">
                     {LEVEL_LABELS[result.level]}
