@@ -244,7 +244,7 @@ export default function Home() {
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3 text-center">
                   <div className="text-xs text-gray-500 mb-1">예상 대기시간</div>
-                  <div className="text-lg font-black text-orange-500">{result.estimatedWaitMin}~{result.estimatedWaitMax}분</div>
+                  <div className={`text-lg font-black ${result.level === 'best' ? 'text-green-600' : result.level === 'good' ? 'text-blue-500' : result.level === 'normal' ? 'text-yellow-600' : result.level === 'busy' ? 'text-orange-500' : 'text-red-500'}`}>{result.estimatedWaitMin}~{result.estimatedWaitMax}분</div>
                   <div className="text-[10px] text-gray-400 mt-0.5">
                     {result.level === 'very_busy' ? '혼잡 시 1시간 이상' : '예상 기준'}
                   </div>
