@@ -226,14 +226,14 @@ export default function Home() {
                   <div className="text-xs text-gray-500 mb-1">동시간대 입국 예상 인원</div>
                   <div className="text-lg font-black text-gray-900">{result.totalPax.toLocaleString()}명</div>
                   <div className="text-[10px] text-gray-400 mt-0.5">
-                    {result.level === 'red' ? '매우 혼잡해요' : result.level === 'orange' ? '혼잡해요' : result.level === 'yellow' ? '보통이에요' : '여유로워요'}
+                    {result.level === 'very_busy' ? '매우 혼잡해요' : result.level === 'busy' ? '혼잡해요' : result.level === 'normal' ? '보통이에요' : '여유로워요'}
                   </div>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3 text-center">
                   <div className="text-xs text-gray-500 mb-1">예상 대기시간</div>
                   <div className="text-lg font-black text-orange-500">{result.estimatedWaitMin}~{result.estimatedWaitMax}분</div>
                   <div className="text-[10px] text-gray-400 mt-0.5">
-                    {result.level === 'red' ? '혼잡 시 1시간 이상' : '예상 기준'}
+                    {result.level === 'very_busy' ? '혼잡 시 1시간 이상' : '예상 기준'}
                   </div>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3 text-center">
@@ -250,18 +250,12 @@ export default function Home() {
 
             {/* 범례 */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
-              <div className="grid grid-cols-4 gap-2 text-center">
-                {(['green', 'yellow', 'orange', 'red'] as const).map((level) => (
+              <div className="grid grid-cols-5 gap-2 text-center">
+                {(['best', 'good', 'normal', 'busy', 'very_busy'] as const).map((level) => (
                   <div key={level}>
                     <CongestionBadge level={level} size="sm" />
                     <div className="text-[10px] text-gray-400 mt-1">
-                      {THRESHOLDS[level].waitMin}~{THRESHOLDS[level].waitMax === 90 ? '60' : THRESHOLDS[level].waitMax}분
-                    </div>
-                    <div className="text-[10px] text-gray-400">
-                      {level === 'green' ? '빠르게 입국 가능' :
-                       level === 'yellow' ? '아이 없으면 비추천' :
-                       level === 'orange' ? '아이 동반·밤 도착 시 추천' :
-                       '가족여행 강력 추천'}
+                      {THRESHOLDS[level].waitMin}~{THRESHOLDS[level].waitMax}분
                     </div>
                   </div>
                 ))}
