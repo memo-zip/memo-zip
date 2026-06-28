@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 import { fetchArrivals } from '@/lib/aerodatabox';
 import { supabase } from '@/lib/supabase';
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 function getDateStr(offsetDays: number) {
   const d = new Date();
@@ -24,7 +24,9 @@ export async function GET(req: Request) {
 
   const results: Record<string, unknown> = {};
 
-  for (const date of dates) {
+  for (let i = 0; i < dates.length; i++) {
+    const date = dates[i];
+    if (i > 0) await new Promise(r => setTimeout(r, 4000));
     try {
       const flights = await fetchArrivals('DAD', date);
       const { error } = await supabase
