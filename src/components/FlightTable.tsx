@@ -92,7 +92,9 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                 <td className="px-1 py-2 pr-2">
                   <div className="flex items-center justify-center gap-0.5">
                     <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColor}`} />
-                    <span className="text-gray-700">{THRESHOLDS[row.level].label}</span>
+                    <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>
+                      {row.waitMin}~{row.waitMax}분
+                    </span>
                   </div>
                 </td>
               </tr>
