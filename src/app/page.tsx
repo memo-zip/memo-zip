@@ -242,12 +242,12 @@ export default function Home() {
                 }`}>
                   <p className="text-xs text-gray-500 mb-2">오늘 패스트트랙은?</p>
                   <div className="flex justify-center mb-2">
-                    <CongestionBadge level={result.level} size="lg" />
-                  </div>
-                  <div className="flex justify-center mb-1">
-                    <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full ${RECOMMENDATION_BADGE[result.level].bg} ${RECOMMENDATION_BADGE[result.level].text}`}>
+                    <span className={`inline-flex items-center gap-1 text-base font-bold px-3 py-1.5 rounded-full ${RECOMMENDATION_BADGE[result.level].bg} ${RECOMMENDATION_BADGE[result.level].text}`}>
                       {RECOMMENDATION_BADGE[result.level].emoji} {RECOMMENDATION_BADGE[result.level].label}
                     </span>
+                  </div>
+                  <div className="flex justify-center mb-1">
+                    <CongestionBadge level={result.level} size="sm" />
                   </div>
                   <p className="text-[10px] text-gray-500 leading-tight mt-1">
                     {LEVEL_LABELS[result.level]}
