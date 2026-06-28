@@ -3,10 +3,11 @@
 import { CongestionLevel } from '@/types';
 
 const SCORE_COLORS: Record<CongestionLevel, string> = {
-  green:  'text-green-500',
-  yellow: 'text-yellow-500',
-  orange: 'text-orange-500',
-  red:    'text-red-500',
+  best:      'text-green-500',
+  good:      'text-green-400',
+  normal:    'text-yellow-500',
+  busy:      'text-orange-500',
+  very_busy: 'text-red-500',
 };
 
 interface Props {
