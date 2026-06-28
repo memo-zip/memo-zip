@@ -89,7 +89,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
           {rows.map((row) => {
             const isSelected = row.flight.id === selectedFlightId;
             return (
-              <tr key={row.flight.id} className={`${isSelected ? 'bg-red-50' : 'hover:bg-gray-50'} transition-colors`}>
+              <tr key={row.flight.id} className={`${isSelected ? 'bg-red-50' : 'hover:bg-gray-50'} transition-colors whitespace-nowrap`}>
                 {/* 항공사 */}
                 <td className="px-4 py-3.5">
                   <span className={`text-xs font-bold ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
@@ -104,8 +104,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                 </td>
                 {/* 기종 */}
                 <td className="px-1 py-3.5 text-center">
-                  <div className="text-xs text-gray-500">{row.flight.aircraft_type}</div>
-                  <div className="text-[10px] text-gray-400">({row.flight.seat_capacity}석)</div>
+                  <span className="text-xs text-gray-500">{row.flight.aircraft_type} <span className="text-gray-400">({row.flight.seat_capacity}석)</span></span>
                 </td>
                 {/* 출발지 */}
                 <td className="px-1 py-3.5 text-center">
