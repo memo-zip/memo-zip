@@ -305,9 +305,20 @@ export default function Home() {
             />
 
             {/* 저작권 */}
-            <div className="text-center space-y-1 pt-2">
-              <div className="text-[10px] text-gray-400 bg-gray-100 rounded-xl px-4 py-2 leading-5">
-                <p>© MEMOZIP. All rights reserved.</p>
+            <div className="flex items-center justify-center gap-4 py-4">
+              <svg width="70" height="70" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="#ef4444" strokeWidth="3"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#ef4444" strokeWidth="1.5"/>
+                <path id="stampCircle" d="M50,50 m-32,0 a32,32 0 1,1 64,0 a32,32 0 1,1 -64,0" fill="none"/>
+                <text fontSize="9" fontWeight="bold" fill="#ef4444" fontFamily="Arial, sans-serif" letterSpacing="3">
+                  <textPath href="#stampCircle" startOffset="8%">MEMOZIP · DANANG FASTTRACK ·</textPath>
+                </text>
+                <text x="50" y="46" textAnchor="middle" fontSize="11" fontWeight="900" fill="#ef4444" fontFamily="Arial, sans-serif">메모집</text>
+                <text x="50" y="60" textAnchor="middle" fontSize="7" fill="#ef4444" fontFamily="Arial, sans-serif" letterSpacing="1">MEMOZIP</text>
+              </svg>
+              <div className="text-center">
+                <p className="text-[11px] text-gray-500">무단 캡처 및 공유, 복제, 2차 가공을 금지합니다.</p>
+                <p className="text-[10px] text-gray-400 mt-1">© MEMOZIP. All rights reserved.</p>
               </div>
             </div>
           </div>
