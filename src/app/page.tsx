@@ -261,7 +261,7 @@ export default function Home() {
                   <div className="text-xs text-gray-500 mb-1">동시간대 입국 예상 인원</div>
                   <div className="text-lg font-black text-gray-900">{result.totalPax.toLocaleString()}명</div>
                   <div className="text-[10px] text-gray-400 mt-0.5">
-                    {result.level === 'very_busy' ? '매우 혼잡해요' : result.level === 'busy' ? '혼잡해요' : result.level === 'normal' ? '보통이에요' : '여유로워요'}
+                    {result.level === 'very_busy' ? '매우 붐벼요' : result.level === 'busy' ? '많이 붐벼요' : result.level === 'normal' ? '좀 붐벼요' : result.level === 'good' ? '적당해요' : '한산해요'}
                   </div>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3 text-center">
