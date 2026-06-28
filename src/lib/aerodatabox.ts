@@ -4,8 +4,10 @@
 interface AeroFlight {
   number: string;
   airline: { name: string; iata: string } | null;
-  aircraft: { model: string; reg: string } | null;
-  scheduledTimeLocal: { departure?: string; arrival?: string } | null;
+  aircraft: { model: string; reg?: string } | null;
+  arrival: {
+    scheduledTime?: { utc?: string; local?: string };
+  } | null;
   status: string;
 }
 
@@ -20,10 +22,24 @@ const AIRCRAFT_SEATS: Record<string, number> = {
   DEFAULT: 180,
 };
 
+function modelToType(model: string | null | undefined): string | null {
+  if (!model) return null;
+  const m = model.toUpperCase();
+  if (m.includes('737-800') || m.includes('738')) return 'B738';
+  if (m.includes('737-900') || m.includes('739')) return 'B739';
+  if (m.includes('737')) return 'B737';
+  if (m.includes('321')) return 'A321';
+  if (m.includes('320')) return 'A320';
+  if (m.includes('319')) return 'A319';
+  if (m.includes('332') || m.includes('330-200')) return 'A332';
+  if (m.includes('333') || m.includes('330-300')) return 'A333';
+  return null;
+}
+
 function getSeatCapacity(model: string | null | undefined): number {
-  if (!model) return AIRCRAFT_SEATS.DEFAULT;
-  const key = model.replace('-', '').toUpperCase().slice(0, 4);
-  return AIRCRAFT_SEATS[key] ?? AIRCRAFT_SEATS.DEFAULT;
+  const type = modelToType(model);
+  if (!type) return AIRCRAFT_SEATS.DEFAULT;
+  return AIRCRAFT_SEATS[type] ?? AIRCRAFT_SEATS.DEFAULT;
 }
 
 export async function fetchArrivals(airportIata: string, date: string) {
@@ -53,14 +69,18 @@ export async function fetchArrivals(airportIata: string, date: string) {
 
   const arrivals = [...(json1.arrivals ?? []), ...(json2.arrivals ?? [])];
 
-  return arrivals.map(f => ({
-    airport_iata: airportIata,
-    flight_number: f.number,
-    airline_iata: f.airline?.iata ?? f.number.slice(0, 2),
-    airline_name: f.airline?.name ?? '',
-    scheduled_arrival: f.scheduledTimeLocal?.arrival ?? '',
-    aircraft_type: f.aircraft?.model?.slice(0, 4).toUpperCase() ?? null,
-    seat_capacity: getSeatCapacity(f.aircraft?.model),
-    flight_date: date,
-  })).filter(f => f.scheduled_arrival);
+  return arrivals.map(f => {
+    const flightNumber = f.number.replace(/\s+/g, '');
+    const scheduledArrival = f.arrival?.scheduledTime?.local ?? '';
+    return {
+      airport_iata: airportIata,
+      flight_number: flightNumber,
+      airline_iata: f.airline?.iata ?? flightNumber.slice(0, 2),
+      airline_name: f.airline?.name ?? '',
+      scheduled_arrival: scheduledArrival,
+      aircraft_type: modelToType(f.aircraft?.model),
+      seat_capacity: getSeatCapacity(f.aircraft?.model),
+      flight_date: date,
+    };
+  }).filter(f => f.scheduled_arrival);
 }
