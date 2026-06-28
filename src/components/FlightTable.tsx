@@ -48,8 +48,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
             <th className="text-left px-1 py-2">출발지</th>
             <th className="text-left px-1 py-2">기종</th>
             <th className="text-center px-1 py-2">겹침</th>
-            <th className="text-center px-1 py-2">예상 대기</th>
-            <th className="text-center px-1 py-2 pr-2">패스트트랙</th>
+            <th className="text-center px-1 py-2 pr-2">예상 대기</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-50">
@@ -80,14 +79,6 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                 <td className="px-1 py-2 text-gray-500">{row.flight.aircraft_type}</td>
                 <td className="px-1 py-2 text-center">
                   <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>{row.concurrentCount}대</span>
-                </td>
-                <td className="px-1 py-2">
-                  <div className="flex items-center justify-center gap-0.5">
-                    <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColor}`} />
-                    <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>
-                      {row.waitMin}~{row.waitMax}분
-                    </span>
-                  </div>
                 </td>
                 <td className="px-1 py-2 pr-2">
                   <div className="flex items-center justify-center gap-0.5">
