@@ -46,6 +46,17 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
         )}
       </div>
 
+      {/* 컬럼 헤더 */}
+      <div className="flex items-center pr-4 py-2 bg-gray-50 text-[10px] text-gray-400 font-medium border-b border-gray-100">
+        <div className="w-1 mr-3 flex-shrink-0" /> {/* 액센트 바 자리 */}
+        <div className="w-12 flex-shrink-0 text-center">시간</div>
+        <div className="w-3 flex-shrink-0 mr-2" />  {/* 간격 */}
+        <div className="flex-1 min-w-0">항공사</div>
+        <div className="w-16 flex-shrink-0 text-center">편명</div>
+        <div className="w-8 flex-shrink-0 text-center">겹침</div>
+        <div className="w-24 flex-shrink-0 text-right">혼잡도</div>
+      </div>
+
       {/* 행 목록 */}
       <div className="divide-y divide-gray-50">
         {rows.map((row) => {
@@ -57,10 +68,10 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
           return (
             <div
               key={row.flight.id}
-              className={`flex items-center gap-3 pl-0 pr-4 py-3 relative ${isSelected ? 'bg-red-50' : ''}`}
+              className={`flex items-center pr-4 py-3 ${isSelected ? 'bg-red-50' : ''}`}
             >
               {/* 왼쪽 혼잡도 액센트 바 */}
-              <div className={`w-1 self-stretch rounded-r-full flex-shrink-0 ${accent}`} />
+              <div className={`w-1 self-stretch rounded-r-full flex-shrink-0 mr-3 ${accent}`} />
 
               {/* 도착 시간 */}
               <div className="w-12 flex-shrink-0 text-center">
@@ -69,30 +80,33 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                 </span>
               </div>
 
-              {/* 항공사 + 편명 */}
+              <div className="w-3 flex-shrink-0 mr-2" />
+
+              {/* 항공사 + 출발지·기종 */}
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className={`text-xs font-bold truncate ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
-                    {row.flight.airline_name}
-                  </span>
-                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md flex-shrink-0 ${isSelected ? 'bg-red-100 text-red-500' : 'bg-gray-100 text-gray-500'}`}>
-                    {row.flight.flight_number}
-                  </span>
+                <div className={`text-xs font-bold truncate ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
+                  {row.flight.airline_name}
                 </div>
-                <div className="text-[10px] text-gray-400 mt-0.5">
+                <div className="text-[10px] text-gray-400 mt-0.5 truncate">
                   {row.flight.departure_city ?? ''} · {row.flight.aircraft_type}
                 </div>
               </div>
 
+              {/* 편명 배지 */}
+              <div className="w-16 flex-shrink-0 text-center">
+                <span className={`inline-block text-[10px] font-bold px-1.5 py-0.5 rounded-md ${isSelected ? 'bg-red-100 text-red-500' : 'bg-gray-100 text-gray-500'}`}>
+                  {row.flight.flight_number}
+                </span>
+              </div>
+
               {/* 겹침 수 */}
-              <div className="flex-shrink-0 text-center w-8">
-                <div className={`text-xs font-bold ${textColor}`}>{row.concurrentCount}대</div>
-                <div className="text-[10px] text-gray-400">겹침</div>
+              <div className="w-8 flex-shrink-0 text-center">
+                <span className={`text-xs font-bold ${textColor}`}>{row.concurrentCount}대</span>
               </div>
 
               {/* 혼잡도 레벨 + 시간 */}
-              <div className="flex-shrink-0 text-right">
-                <div className={`flex items-center gap-1 justify-end`}>
+              <div className="w-24 flex-shrink-0 text-right">
+                <div className="flex items-center gap-1 justify-end">
                   <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${accent}`} />
                   <span className={`text-xs font-bold ${textColor}`}>{t.label}</span>
                 </div>
