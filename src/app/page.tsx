@@ -10,7 +10,7 @@ import FlightTable from '@/components/FlightTable';
 const AIRPORT = 'DAD';
 
 function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
+  return new Date(iso).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' });
 }
 
 function formatDate(dateStr: string) {

@@ -11,7 +11,7 @@ const WAIT_COLORS: Record<CongestionLevel, string> = {
 };
 
 function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false });
+  return new Date(iso).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' });
 }
 
 interface Props {
@@ -75,7 +75,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                     {row.flight.flight_number}
                   </span>
                 </td>
-                <td className="px-1 py-2 text-gray-500 truncate max-w-[60px]">{row.flight.departure_city ?? '-'}</td>
+                <td className="px-1 py-2 text-gray-500 truncate max-w-[60px]">{row.flight.departure_city ?? ''}</td>
                 <td className="px-1 py-2 text-gray-500">{row.flight.aircraft_type}</td>
                 <td className="px-1 py-2 text-center">
                   <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>{row.concurrentCount}대</span>

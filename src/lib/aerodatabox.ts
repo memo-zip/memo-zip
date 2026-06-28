@@ -89,6 +89,6 @@ export async function fetchArrivals(airportIata: string, date: string) {
       departure_city: departureCity,
       _departureCountry: departureCountry,
     };
-  }).filter(f => f.scheduled_arrival && f._departureCountry !== 'vn')
+  }).filter(f => f.scheduled_arrival && f._departureCountry !== 'vn' && f.departure_city !== null)
     .map(({ _departureCountry: _, ...f }) => f);
 }
