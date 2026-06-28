@@ -4,7 +4,7 @@ export const THRESHOLDS: Record<CongestionLevel, {
   label: string; waitMin: number; waitMax: number; color: string; bgColor: string;
 }> = {
   best:      { label: '한산해요',     waitMin: 0,  waitMax: 20,  color: 'text-green-600',  bgColor: 'bg-green-500'  },
-  good:      { label: '여유 있어요',  waitMin: 20, waitMax: 40,  color: 'text-blue-500',   bgColor: 'bg-blue-400'   },
+  good:      { label: '적당해요',     waitMin: 20, waitMax: 40,  color: 'text-blue-500',   bgColor: 'bg-blue-400'   },
   normal:    { label: '좀 붐벼요',   waitMin: 40, waitMax: 60,  color: 'text-yellow-600', bgColor: 'bg-yellow-400' },
   busy:      { label: '많이 붐벼요', waitMin: 60, waitMax: 80,  color: 'text-orange-500', bgColor: 'bg-orange-500' },
   very_busy: { label: '매우 붐벼요', waitMin: 80, waitMax: 120, color: 'text-red-500',    bgColor: 'bg-red-500'    },
