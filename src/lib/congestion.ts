@@ -59,6 +59,7 @@ function calcFlightCongestion(
     waitMax: t.waitMax,
     windowStart: windowStart.toISOString(),
     windowEnd: arrivalTime.toISOString(),
+    concurrentCount: concurrent.length,
   };
 }
 

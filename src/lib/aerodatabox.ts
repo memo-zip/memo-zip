@@ -9,7 +9,7 @@ interface AeroFlight {
     scheduledTime?: { utc?: string; local?: string };
   } | null;
   departure: {
-    airport?: { countryCode?: string };
+    airport?: { countryCode?: string; name?: string };
   } | null;
   status: string;
 }
@@ -76,6 +76,7 @@ export async function fetchArrivals(airportIata: string, date: string) {
     const flightNumber = f.number.replace(/\s+/g, '');
     const scheduledArrival = f.arrival?.scheduledTime?.local ?? '';
     const departureCountry = f.departure?.airport?.countryCode;
+    const departureCity = f.departure?.airport?.name ?? null;
     return {
       airport_iata: airportIata,
       flight_number: flightNumber,
@@ -85,6 +86,7 @@ export async function fetchArrivals(airportIata: string, date: string) {
       aircraft_type: modelToType(f.aircraft?.model),
       seat_capacity: getSeatCapacity(f.aircraft?.model),
       flight_date: date,
+      departure_city: departureCity,
       _departureCountry: departureCountry,
     };
   }).filter(f => f.scheduled_arrival && f._departureCountry !== 'vn')

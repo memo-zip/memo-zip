@@ -18,6 +18,7 @@ export interface Flight {
   aircraft_type: string;
   seat_capacity: number;
   flight_date: string;
+  departure_city?: string | null;
 }
 
 export interface FlightCongestion {
@@ -29,6 +30,7 @@ export interface FlightCongestion {
   waitMax: number;
   windowStart: string;
   windowEnd: string;
+  concurrentCount: number;
 }
 
 export interface CongestionResult {

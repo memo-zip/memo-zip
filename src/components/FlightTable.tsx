@@ -44,8 +44,9 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
             <th className="text-left px-2 py-2">시간</th>
             <th className="text-left px-1 py-2">항공사</th>
             <th className="text-left px-1 py-2">편명</th>
+            <th className="text-left px-1 py-2">출발지</th>
             <th className="text-left px-1 py-2">기종</th>
-            <th className="text-right px-1 py-2">좌석</th>
+            <th className="text-center px-1 py-2">겹침</th>
             <th className="text-center px-1 py-2">예상 대기</th>
             <th className="text-center px-1 py-2 pr-2">패스트트랙</th>
           </tr>
@@ -74,8 +75,11 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                     {row.flight.flight_number}
                   </span>
                 </td>
+                <td className="px-1 py-2 text-gray-500 truncate max-w-[60px]">{row.flight.departure_city ?? '-'}</td>
                 <td className="px-1 py-2 text-gray-500">{row.flight.aircraft_type}</td>
-                <td className="px-1 py-2 text-gray-500 text-right">{row.flight.seat_capacity}</td>
+                <td className="px-1 py-2 text-center">
+                  <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>{row.concurrentCount}대</span>
+                </td>
                 <td className="px-1 py-2">
                   <div className="flex items-center justify-center gap-0.5">
                     <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColor}`} />
