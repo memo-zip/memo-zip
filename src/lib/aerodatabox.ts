@@ -37,16 +37,17 @@ export async function fetchArrivals(airportIata: string, date: string) {
   const params = 'withLeg=true&direction=Arrival&withCancelled=false&withCodeshared=false&withCargo=false&withPrivate=false';
   const base = `https://aerodatabox.p.rapidapi.com/flights/airports/iata/${airportIata}`;
 
-  // AeroDataBox 최대 12시간 범위 → 오전/오후로 나눠 2번 호출
-  const [res1, res2] = await Promise.all([
-    fetch(`${base}/${date}T00:00/${date}T11:59?${params}`, { headers }),
-    fetch(`${base}/${date}T12:00/${date}T23:59?${params}`, { headers }),
-  ]);
-
+  // AeroDataBox 최대 12시간 범위 → 오전/오후로 나눠 순차 호출
+  const res1 = await fetch(`${base}/${date}T00:00/${date}T11:59?${params}`, { headers });
   if (!res1.ok) throw new Error(`AeroDataBox error: ${res1.status}`);
-  if (!res2.ok) throw new Error(`AeroDataBox error: ${res2.status}`);
+  const json1: AeroResponse = await res1.json();
 
-  const [json1, json2]: [AeroResponse, AeroResponse] = await Promise.all([res1.json(), res2.json()]);
+  await new Promise(r => setTimeout(r, 1500));
+
+  const res2 = await fetch(`${base}/${date}T12:00/${date}T23:59?${params}`, { headers });
+  if (!res2.ok) throw new Error(`AeroDataBox error: ${res2.status}`);
+  const json2: AeroResponse = await res2.json();
+
   const arrivals = [...(json1.arrivals ?? []), ...(json2.arrivals ?? [])];
 
   return arrivals.map(f => ({
