@@ -176,6 +176,22 @@ export default function Home() {
           </p>
         </div>
 
+        {/* 이용 안내 */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
+          <p className="text-xs font-bold text-gray-700 mb-3">ℹ️ 이용 안내</p>
+          <ul className="space-y-2 text-[11px] text-gray-500 leading-relaxed">
+            <li>• <span className="font-semibold text-gray-700">7월 5일</span>까지의 항공편을 조회할 수 있습니다. <span className="text-gray-400">(매주 일요일 데이터가 업데이트됩니다.)</span></li>
+            <li>• 혼잡도는 도착 예정 시간 기준 <span className="font-semibold text-gray-700">이전 1시간 내</span> 도착하는 항공편 수와 좌석 수를 바탕으로 산정됩니다.</li>
+            <li>• 다낭 국제공항(DAD) <span className="font-semibold text-gray-700">국제선 입국편</span>만 제공됩니다.</li>
+            <li>• 본 서비스는 실시간 공항 혼잡도를 제공하지 않습니다.</li>
+            <li>• 항공사 사정에 따라 지연, 결항 및 시간 변경이 발생할 수 있습니다.</li>
+            <li>• 패스트트랙 구매 여부를 판단하기 위한 <span className="font-semibold text-gray-700">참고용 정보</span>이며 실제 공항 상황과 차이가 있을 수 있습니다.</li>
+            <li>• 항공 데이터는 AeroDataBox를 기반으로 하며 일부 항공편이 누락될 수 있습니다.</li>
+            <li>• 본 서비스를 이용한 패스트트랙 구매 및 이용 결과에 대한 책임은 이용자에게 있습니다.</li>
+            <li>• 본 서비스는 <span className="font-semibold text-gray-700">메모집이 직접 제작·운영</span>하며, 무단 캡처·복제·재배포를 금지합니다.</li>
+          </ul>
+        </div>
+
         {/* 에러 */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-600">
@@ -287,22 +303,6 @@ export default function Home() {
               windowEnd={result.windowEnd}
               totalPax={result.totalPax}
             />
-
-            {/* 이용 안내 */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
-              <p className="text-xs font-bold text-gray-700 mb-3">ℹ️ 이용 안내</p>
-              <ul className="space-y-2 text-[11px] text-gray-500 leading-relaxed">
-                <li>• <span className="font-semibold text-gray-700">7월 5일</span>까지의 항공편을 조회할 수 있습니다. <span className="text-gray-400">(매주 일요일 데이터가 업데이트됩니다.)</span></li>
-                <li>• 혼잡도는 도착 예정 시간 기준 <span className="font-semibold text-gray-700">이전 1시간 내</span> 도착하는 항공편 수와 좌석 수를 바탕으로 산정됩니다.</li>
-                <li>• 다낭 국제공항(DAD) <span className="font-semibold text-gray-700">국제선 입국편</span>만 제공됩니다.</li>
-                <li>• 본 서비스는 실시간 공항 혼잡도를 제공하지 않습니다.</li>
-                <li>• 항공사 사정에 따라 지연, 결항 및 시간 변경이 발생할 수 있습니다.</li>
-                <li>• 패스트트랙 구매 여부를 판단하기 위한 <span className="font-semibold text-gray-700">참고용 정보</span>이며 실제 공항 상황과 차이가 있을 수 있습니다.</li>
-                <li>• 항공 데이터는 AeroDataBox를 기반으로 하며 일부 항공편이 누락될 수 있습니다.</li>
-                <li>• 본 서비스를 이용한 패스트트랙 구매 및 이용 결과에 대한 책임은 이용자에게 있습니다.</li>
-                <li>• 본 서비스는 <span className="font-semibold text-gray-700">메모집이 직접 제작·운영</span>하며, 무단 캡처·복제·재배포를 금지합니다.</li>
-              </ul>
-            </div>
 
             {/* 저작권 */}
             <div className="text-center space-y-1 pt-2">
