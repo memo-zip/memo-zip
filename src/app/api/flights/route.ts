@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
     .select('*')
     .eq('airport_iata', airport)
     .eq('flight_date', date)
+    .not('departure_city', 'is', null)
     .order('scheduled_arrival', { ascending: true });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
