@@ -80,7 +80,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
               </div>
 
               {/* 항공사 + 출발도시 */}
-              <div className="flex-1 min-w-0 pl-2">
+              <div className="flex-1 min-w-0 text-center">
                 <div className={`text-xs font-bold truncate ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
                   {row.flight.airline_name}
                 </div>
@@ -103,8 +103,8 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
               </div>
 
               {/* 혼잡도 */}
-              <div className="w-20 flex-shrink-0 text-right">
-                <div className="flex items-center gap-1 justify-end">
+              <div className="w-20 flex-shrink-0 text-center">
+                <div className="flex items-center gap-1 justify-center">
                   <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${accent}`} />
                   <span className={`text-xs font-bold ${textColor}`}>{t.label}</span>
                 </div>
