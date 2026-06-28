@@ -50,7 +50,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
       <div className="flex items-center pr-4 py-2 bg-gray-50 text-[10px] text-gray-400 font-medium border-b border-gray-100">
         <div className="w-1 mr-3 flex-shrink-0" />
         <div className="w-14 flex-shrink-0 text-center">도착시간</div>
-        <div className="flex-1 min-w-0 pl-2">항공사 / 출발도시</div>
+        <div className="flex-1 min-w-0 text-center">항공사 / 출발도시</div>
         <div className="w-16 flex-shrink-0 text-center">편명</div>
         <div className="w-12 flex-shrink-0 text-center">겹침 현황</div>
         <div className="w-20 flex-shrink-0 text-center">혼잡도</div>
@@ -80,7 +80,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
               </div>
 
               {/* 항공사 + 출발도시 */}
-              <div className="flex-1 min-w-0 flex items-center gap-2">
+              <div className="flex-1 min-w-0 flex items-center justify-center gap-2">
                 <img
                   src={`https://pics.avs.io/40/40/${row.flight.airline_iata}.png`}
                   alt={row.flight.airline_iata}
