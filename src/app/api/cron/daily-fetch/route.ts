@@ -28,7 +28,14 @@ export async function GET(req: Request) {
     const date = dates[i];
     if (i > 0) await new Promise(r => setTimeout(r, 4000));
     try {
-      const flights = await fetchArrivals('DAD', date);
+      const raw = await fetchArrivals('DAD', date);
+      const seen = new Set<string>();
+      const flights = raw.filter(f => {
+        const key = `${f.flight_number}|${f.flight_date}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
       const { error } = await supabaseAdmin
         .from('flights')
         .upsert(flights, { onConflict: 'airport_iata,flight_number,flight_date' });
