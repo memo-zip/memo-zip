@@ -39,7 +39,16 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
       </div>
 
       {/* 테이블 */}
-      <table className="w-full text-[10px]">
+      <table className="w-full text-[10px] table-fixed">
+        <colgroup>
+          <col style={{ width: '13%' }} />  {/* 시간 */}
+          <col style={{ width: '28%' }} />  {/* 항공사 */}
+          <col style={{ width: '13%' }} />  {/* 편명 */}
+          <col style={{ width: '16%' }} />  {/* 출발지 */}
+          <col style={{ width: '10%' }} />  {/* 기종 */}
+          <col style={{ width: '8%' }} />   {/* 겹침 */}
+          <col style={{ width: '12%' }} />  {/* 예상 대기 */}
+        </colgroup>
         <thead>
           <tr className="bg-gray-50 text-gray-400 font-medium">
             <th className="text-left px-2 py-2">시간</th>
@@ -63,11 +72,11 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                   </span>
                 </td>
                 <td className="px-1 py-2">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 min-w-0">
                     <span className="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center text-[7px] font-bold text-gray-500 flex-shrink-0">
                       {row.flight.airline_iata}
                     </span>
-                    <span className="text-gray-600 truncate max-w-[80px]">{row.flight.airline_name}</span>
+                    <span className="text-gray-600 truncate">{row.flight.airline_name}</span>
                   </div>
                 </td>
                 <td className="px-1 py-2">
@@ -75,7 +84,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
                     {row.flight.flight_number}
                   </span>
                 </td>
-                <td className="px-1 py-2 text-gray-500 truncate max-w-[60px]">{row.flight.departure_city ?? ''}</td>
+                <td className="px-1 py-2 text-gray-500 truncate">{row.flight.departure_city ?? ''}</td>
                 <td className="px-1 py-2 text-gray-500">{row.flight.aircraft_type}</td>
                 <td className="px-1 py-2 text-center">
                   <span className={`font-semibold ${WAIT_COLORS[row.level]}`}>{row.concurrentCount}대</span>
