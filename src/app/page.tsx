@@ -252,9 +252,9 @@ export default function Home() {
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
               <div className="grid grid-cols-5 gap-2 text-center">
                 {(['best', 'good', 'normal', 'busy', 'very_busy'] as const).map((level) => (
-                  <div key={level}>
-                    <CongestionBadge level={level} size="sm" />
-                    <div className="text-[10px] text-gray-400 mt-1">
+                  <div key={level} className="flex flex-col items-center gap-1">
+                    <CongestionBadge level={level} size="sm" hideLabel />
+                    <div className="text-[10px] text-gray-400">
                       {THRESHOLDS[level].waitMin}~{THRESHOLDS[level].waitMax}분
                     </div>
                   </div>
