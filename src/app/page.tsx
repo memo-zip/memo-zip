@@ -280,14 +280,24 @@ export default function Home() {
             {/* 범례 */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
               <div className="grid grid-cols-5 gap-2 text-center">
-                {(['best', 'good', 'normal', 'busy', 'very_busy'] as const).map((level) => (
-                  <div key={level} className="flex flex-col items-center gap-1">
-                    <CongestionBadge level={level} size="sm" />
-                    <div className="text-[10px] text-gray-400">
-                      {THRESHOLDS[level].waitMin}~{THRESHOLDS[level].waitMax}분
+                {(['best', 'good', 'normal', 'busy', 'very_busy'] as const).map((level) => {
+                  const subLabel = {
+                    best:      '일반입국 추천',
+                    good:      '일반입국 추천',
+                    normal:    '아이있으면 고려',
+                    busy:      '아이동반·밤도착 시 추천',
+                    very_busy: '가족여행 강력추천',
+                  }[level];
+                  return (
+                    <div key={level} className="flex flex-col items-center gap-1">
+                      <CongestionBadge level={level} size="sm" />
+                      <div className="text-[10px] text-gray-400">
+                        {THRESHOLDS[level].waitMin}~{THRESHOLDS[level].waitMax}분
+                      </div>
+                      <div className="text-[9px] text-gray-400 leading-tight">{subLabel}</div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
               <p className="text-[10px] text-gray-400 text-center mt-3">
                 ⓘ 예측 데이터는 항공사 스케줄, 좌석수, 시간대, 성수기 등을 기반으로 산출됩니다.
