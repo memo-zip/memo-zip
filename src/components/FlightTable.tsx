@@ -74,7 +74,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
 
               {/* 도착 시간 */}
               <div className="w-14 flex-shrink-0 text-center">
-                <span className={`text-sm font-black ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
+                <span className={`text-xs font-bold ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
                   {formatTime(row.flight.scheduled_arrival)}
                 </span>
               </div>
