@@ -2,7 +2,7 @@
 // AeroDataBox로 오늘~7일 후 다낭 도착편 수집
 import { NextResponse } from 'next/server';
 import { fetchArrivals } from '@/lib/aerodatabox';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export const maxDuration = 300;
 
@@ -29,7 +29,7 @@ export async function GET(req: Request) {
     if (i > 0) await new Promise(r => setTimeout(r, 4000));
     try {
       const flights = await fetchArrivals('DAD', date);
-      const { error } = await supabase
+      const { error } = await supabaseAdmin
         .from('flights')
         .upsert(flights, { onConflict: 'airport_iata,flight_number,flight_date' });
 
