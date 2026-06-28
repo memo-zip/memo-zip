@@ -35,7 +35,10 @@ export async function fetchArrivals(airportIata: string, date: string) {
     'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com',
   };
   const params = 'withLeg=true&direction=Arrival&withCancelled=false&withCodeshared=false&withCargo=false&withPrivate=false';
-  const base = `https://aerodatabox.p.rapidapi.com/flights/airports/iata/${airportIata}`;
+  // DAD(IATA) → VVDN(ICAO) 변환
+  const icaoMap: Record<string, string> = { DAD: 'VVDN' };
+  const icao = icaoMap[airportIata] ?? airportIata;
+  const base = `https://aerodatabox.p.rapidapi.com/flights/airports/icao/${icao}`;
 
   // AeroDataBox 최대 12시간 범위 → 오전/오후로 나눠 순차 호출
   const res1 = await fetch(`${base}/${date}T00:00/${date}T11:59?${params}`, { headers });
