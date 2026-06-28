@@ -1,12 +1,13 @@
 'use client';
 
 import { FlightCongestion, CongestionLevel } from '@/types';
+import { THRESHOLDS } from '@/lib/congestion';
 
 function formatTime(iso: string) {
   return new Date(iso).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' });
 }
 
-const BAR_COLORS: Record<CongestionLevel, string> = {
+const ACCENT_COLORS: Record<CongestionLevel, string> = {
   best:      'bg-green-500',
   good:      'bg-blue-400',
   normal:    'bg-yellow-400',
@@ -14,33 +15,13 @@ const BAR_COLORS: Record<CongestionLevel, string> = {
   very_busy: 'bg-red-500',
 };
 
-const PAX_COLORS: Record<CongestionLevel, string> = {
+const TEXT_COLORS: Record<CongestionLevel, string> = {
   best:      'text-green-600',
   good:      'text-blue-500',
   normal:    'text-yellow-600',
   busy:      'text-orange-500',
   very_busy: 'text-red-500',
 };
-
-const LEVEL_BARS: Record<CongestionLevel, number> = {
-  best: 1, good: 2, normal: 3, busy: 4, very_busy: 5,
-};
-
-function MiniBar({ level }: { level: CongestionLevel }) {
-  const filled = LEVEL_BARS[level];
-  const color = BAR_COLORS[level];
-  return (
-    <div className="flex items-end gap-[2px]">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <div
-          key={i}
-          className={`w-2 rounded-sm ${i < filled ? color : 'bg-gray-200'}`}
-          style={{ height: `${8 + i * 3}px` }}
-        />
-      ))}
-    </div>
-  );
-}
 
 interface Props {
   rows: FlightCongestion[];
@@ -65,71 +46,64 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
         )}
       </div>
 
-      {/* 테이블 */}
-      <table className="w-full table-fixed">
-        <colgroup>
-          <col style={{ width: '22%' }} />
-          <col style={{ width: '14%' }} />
-          <col style={{ width: '14%' }} />
-          <col style={{ width: '14%' }} />
-          <col style={{ width: '18%' }} />
-          <col style={{ width: '18%' }} />
-        </colgroup>
-        <thead>
-          <tr className="bg-gray-50 text-[10px] text-gray-400 font-medium">
-            <th className="text-left px-4 py-2.5">항공사</th>
-            <th className="text-center px-1 py-2.5">편명</th>
-            <th className="text-center px-1 py-2.5">기종</th>
-            <th className="text-center px-1 py-2.5">출발지</th>
-            <th className="text-center px-1 py-2.5">도착 시간</th>
-            <th className="text-center px-2 py-2.5">혼잡도</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-50">
-          {rows.map((row) => {
-            const isSelected = row.flight.id === selectedFlightId;
-            return (
-              <tr key={row.flight.id} className={`${isSelected ? 'bg-red-50' : 'hover:bg-gray-50'} transition-colors whitespace-nowrap`}>
-                {/* 항공사 */}
-                <td className="px-4 py-3.5">
-                  <span className={`text-xs font-bold ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
+      {/* 행 목록 */}
+      <div className="divide-y divide-gray-50">
+        {rows.map((row) => {
+          const isSelected = row.flight.id === selectedFlightId;
+          const accent = ACCENT_COLORS[row.level];
+          const textColor = TEXT_COLORS[row.level];
+          const t = THRESHOLDS[row.level];
+
+          return (
+            <div
+              key={row.flight.id}
+              className={`flex items-center gap-3 pl-0 pr-4 py-3 relative ${isSelected ? 'bg-red-50' : ''}`}
+            >
+              {/* 왼쪽 혼잡도 액센트 바 */}
+              <div className={`w-1 self-stretch rounded-r-full flex-shrink-0 ${accent}`} />
+
+              {/* 도착 시간 */}
+              <div className="w-12 flex-shrink-0 text-center">
+                <span className={`text-sm font-black ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
+                  {formatTime(row.flight.scheduled_arrival)}
+                </span>
+              </div>
+
+              {/* 항공사 + 편명 */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className={`text-xs font-bold truncate ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
                     {row.flight.airline_name}
                   </span>
-                </td>
-                {/* 편명 */}
-                <td className="px-1 py-3.5 text-center">
-                  <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-md ${isSelected ? 'bg-red-100 text-red-500' : 'bg-gray-100 text-gray-600'}`}>
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md flex-shrink-0 ${isSelected ? 'bg-red-100 text-red-500' : 'bg-gray-100 text-gray-500'}`}>
                     {row.flight.flight_number}
                   </span>
-                </td>
-                {/* 기종 */}
-                <td className="px-1 py-3.5 text-center">
-                  <span className="text-xs text-gray-500">{row.flight.aircraft_type} <span className="text-gray-400">({row.flight.seat_capacity}석)</span></span>
-                </td>
-                {/* 출발지 */}
-                <td className="px-1 py-3.5 text-center">
-                  <span className="text-xs text-gray-500 truncate block">{row.flight.departure_city ?? ''}</span>
-                </td>
-                {/* 도착 시간 */}
-                <td className="px-1 py-3.5 text-center">
-                  <span className={`text-sm font-bold ${isSelected ? 'text-red-500' : 'text-gray-800'}`}>
-                    {formatTime(row.flight.scheduled_arrival)}
-                  </span>
-                </td>
-                {/* 혼잡도 */}
-                <td className="px-2 py-3.5">
-                  <div className="flex flex-col items-center gap-1">
-                    <MiniBar level={row.level} />
-                    <span className={`text-[10px] font-bold ${PAX_COLORS[row.level]}`}>
-                      {row.totalPax.toLocaleString()}명
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                </div>
+                <div className="text-[10px] text-gray-400 mt-0.5">
+                  {row.flight.departure_city ?? ''} · {row.flight.aircraft_type}
+                </div>
+              </div>
+
+              {/* 겹침 수 */}
+              <div className="flex-shrink-0 text-center w-8">
+                <div className={`text-xs font-bold ${textColor}`}>{row.concurrentCount}대</div>
+                <div className="text-[10px] text-gray-400">겹침</div>
+              </div>
+
+              {/* 혼잡도 레벨 + 시간 */}
+              <div className="flex-shrink-0 text-right">
+                <div className={`flex items-center gap-1 justify-end`}>
+                  <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${accent}`} />
+                  <span className={`text-xs font-bold ${textColor}`}>{t.label}</span>
+                </div>
+                <div className={`text-[10px] font-semibold ${textColor} mt-0.5`}>
+                  {t.waitMin}~{t.waitMax}분
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       {/* 하단 요약 */}
       <div className="border-t border-gray-100 px-5 py-3 bg-gray-50">
