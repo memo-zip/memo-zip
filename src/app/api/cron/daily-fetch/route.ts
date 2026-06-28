@@ -1,10 +1,10 @@
 // Vercel Cron: 매일 UTC 15:00 (베트남 자정 +7) 실행
-// AeroDataBox로 오늘+내일 다낭 도착편 수집
+// AeroDataBox로 오늘~7일 후 다낭 도착편 수집
 import { NextResponse } from 'next/server';
 import { fetchArrivals } from '@/lib/aerodatabox';
 import { supabase } from '@/lib/supabase';
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 function getDateStr(offsetDays: number) {
   const d = new Date();
@@ -17,8 +17,10 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const dateParam = searchParams.get('date');
 
-  // date 파라미터 있으면 그 날짜, 없으면 오늘+내일
-  const dates = dateParam ? [dateParam] : [getDateStr(0), getDateStr(1)];
+  // date 파라미터 있으면 그 날짜만, 없으면 오늘~7일 후
+  const dates = dateParam
+    ? [dateParam]
+    : Array.from({ length: 7 }, (_, i) => getDateStr(i));
 
   const results: Record<string, unknown> = {};
 
