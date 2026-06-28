@@ -2,10 +2,11 @@ import { CongestionLevel } from '@/types';
 import { THRESHOLDS } from '@/lib/congestion';
 
 const DOT_COLORS: Record<CongestionLevel, string> = {
-  green:  'bg-green-500',
-  yellow: 'bg-yellow-400',
-  orange: 'bg-orange-500',
-  red:    'bg-red-500',
+  best:      'bg-green-500',
+  good:      'bg-green-400',
+  normal:    'bg-yellow-400',
+  busy:      'bg-orange-500',
+  very_busy: 'bg-red-500',
 };
 
 interface Props {

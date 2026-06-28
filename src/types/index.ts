@@ -1,4 +1,4 @@
-export type CongestionLevel = 'green' | 'yellow' | 'orange' | 'red';
+export type CongestionLevel = 'best' | 'good' | 'normal' | 'busy' | 'very_busy';
 
 export interface Airport {
   iata_code: string;

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Flight, CongestionResult } from '@/types';
 import { THRESHOLDS } from '@/lib/congestion';
-import ScoreDisplay from '@/components/ScoreDisplay';
+import CongestionBar from '@/components/CongestionBar';
 import CongestionBadge from '@/components/CongestionBadge';
 import FlightTable from '@/components/FlightTable';
 
@@ -72,10 +72,11 @@ export default function Home() {
   const selectedFlight = flights.find((f) => f.id === selectedFlightId);
 
   const LEVEL_LABELS: Record<string, string> = {
-    green: '패스트트랙이 필요하지 않아요.',
-    yellow: '여유 있으면 구매를 고려해보세요.',
-    red: '동시간대 입국 인원이 많아 대기 시간이 길 것으로 예상돼요.',
-    orange: '동시간대 입국 인원이 많아 패스트트랙을 추천드려요.',
+    best:      '대기 없이 빠르게 입국할 수 있어요.',
+    good:      '패스트트랙 없이도 여유롭게 입국할 수 있어요.',
+    normal:    '아이 동반이라면 패스트트랙을 고려해보세요.',
+    busy:      '동시간대 입국 인원이 많아 패스트트랙을 추천드려요.',
+    very_busy: '동시간대 입국 인원이 매우 많아 대기 시간이 길 것으로 예상돼요.',
   };
 
   return (
@@ -200,14 +201,14 @@ export default function Home() {
                 {/* 점수 */}
                 <div className="bg-gray-50 rounded-xl p-3 text-center">
                   <p className="text-xs text-gray-500 mb-2">오늘 입국 혼잡도</p>
-                  <ScoreDisplay score={result.score} level={result.level} />
+                  <CongestionBar pax={result.totalPax} />
                 </div>
 
                 {/* 추천 */}
                 <div className={`rounded-xl p-3 text-center ${
-                  result.level === 'red' ? 'bg-red-50' :
-                  result.level === 'orange' ? 'bg-orange-50' :
-                  result.level === 'yellow' ? 'bg-yellow-50' : 'bg-green-50'
+                  result.level === 'very_busy' ? 'bg-red-50' :
+                  result.level === 'busy' ? 'bg-orange-50' :
+                  result.level === 'normal' ? 'bg-yellow-50' : 'bg-green-50'
                 }`}>
                   <p className="text-xs text-gray-500 mb-2">오늘 패스트트랙은?</p>
                   <div className="flex justify-center mb-1">
