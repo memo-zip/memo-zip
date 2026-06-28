@@ -5,7 +5,7 @@ import { THRESHOLDS } from '@/lib/congestion';
 
 const WAIT_COLORS: Record<CongestionLevel, string> = {
   best:      'text-green-600',
-  good:      'text-green-500',
+  good:      'text-blue-500',
   normal:    'text-yellow-600',
   busy:      'text-orange-500',
   very_busy: 'text-red-500',
@@ -54,7 +54,7 @@ export default function FlightTable({ rows, selectedFlightId, lastUpdated, windo
         <tbody className="divide-y divide-gray-50">
           {rows.map((row) => {
             const isSelected = row.flight.id === selectedFlightId;
-            const dotColor = row.level === 'best' ? 'bg-green-500' : row.level === 'good' ? 'bg-green-400' : row.level === 'normal' ? 'bg-yellow-400' : row.level === 'busy' ? 'bg-orange-500' : 'bg-red-500';
+            const dotColor = row.level === 'best' ? 'bg-green-500' : row.level === 'good' ? 'bg-blue-400' : row.level === 'normal' ? 'bg-yellow-400' : row.level === 'busy' ? 'bg-orange-500' : 'bg-red-500';
             return (
               <tr key={row.flight.id} className={isSelected ? 'bg-red-50' : ''}>
                 <td className="px-2 py-2">

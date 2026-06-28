@@ -16,7 +16,7 @@ function getLevel(pax: number): Level {
 
 const LEVEL_CONFIG: Record<Level, { label: string; bars: number; color: string }> = {
   best:     { label: '한산해요',     bars: 1, color: 'bg-green-500' },
-  good:     { label: '여유 있어요',  bars: 2, color: 'bg-green-400' },
+  good:     { label: '여유 있어요',  bars: 2, color: 'bg-blue-400' },
   normal:   { label: '좀 붐벼요',   bars: 3, color: 'bg-yellow-400' },
   busy:     { label: '많이 붐벼요', bars: 4, color: 'bg-orange-500' },
   very_busy:{ label: '매우 붐벼요', bars: 5, color: 'bg-red-500' },

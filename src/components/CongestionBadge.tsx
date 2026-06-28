@@ -3,7 +3,7 @@ import { THRESHOLDS } from '@/lib/congestion';
 
 const DOT_COLORS: Record<CongestionLevel, string> = {
   best:      'bg-green-500',
-  good:      'bg-green-400',
+  good:      'bg-blue-400',
   normal:    'bg-yellow-400',
   busy:      'bg-orange-500',
   very_busy: 'bg-red-500',
