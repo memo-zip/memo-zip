@@ -28,7 +28,7 @@ function NoticeBox() {
       <ul className="space-y-2 text-[11px] text-gray-500 leading-relaxed">
         <li>• <span className="font-semibold text-gray-700">최대 30일 후</span>까지의 항공편을 조회할 수 있습니다. <span className="text-gray-400">(매일 자동으로 데이터가 업데이트됩니다.)</span></li>
         <li>• 혼잡도는 도착 예정 시간 기준 <span className="font-semibold text-gray-700">이전 1시간 내</span> 도착하는 항공편 수와 좌석 수를 바탕으로 산정됩니다.</li>
-        <li>• 다낭 국제공항(DAD) <span className="font-semibold text-gray-700">국제선 입국편</span>만 제공됩니다.</li>
+        <li>• 다낭 국제공항(DAD) · 나트랑 깜라인 국제공항(CXR) <span className="font-semibold text-gray-700">국제선 입국편</span>만 제공됩니다.</li>
         <li>• 본 서비스는 실시간 공항 혼잡도를 제공하지 않습니다.</li>
         <li>• 항공사 사정에 따라 지연, 결항 및 시간 변경이 발생할 수 있습니다.</li>
         <li>• 패스트트랙 구매 여부를 판단하기 위한 <span className="font-semibold text-gray-700">참고용 정보</span>이며 실제 공항 상황과 차이가 있을 수 있습니다.</li>
