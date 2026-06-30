@@ -7,7 +7,10 @@ import CongestionBar from '@/components/CongestionBar';
 import CongestionBadge from '@/components/CongestionBadge';
 import FlightTable from '@/components/FlightTable';
 
-const AIRPORT = 'DAD';
+const AIRPORTS = [
+  { iata: 'DAD', label: '다낭' },
+  { iata: 'CXR', label: '나트랑' },
+];
 
 function formatTime(iso: string) {
   return new Date(iso).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' });
@@ -38,6 +41,7 @@ function NoticeBox() {
 }
 
 export default function Home() {
+  const [airport, setAirport] = useState('DAD');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [flights, setFlights] = useState<Flight[]>([]);
   const [selectedFlightId, setSelectedFlightId] = useState('');
@@ -50,7 +54,7 @@ export default function Home() {
 
   const today = new Date().toISOString().split('T')[0];
 
-  async function loadFlights(d: string) {
+  async function loadFlights(d: string, ap: string = airport) {
     setLoadingFlights(true);
     setError('');
     setFlights([]);
@@ -58,7 +62,7 @@ export default function Home() {
     setResult(null);
     setFlightsLoaded(false);
     try {
-      const res = await fetch(`/api/flights?airport=${AIRPORT}&date=${d}`);
+      const res = await fetch(`/api/flights?airport=${ap}&date=${d}`);
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
       setFlights(json.flights ?? []);
@@ -126,6 +130,30 @@ export default function Home() {
               @memozip_usb
             </a>
           </div>
+        </div>
+
+        {/* 공항 탭 */}
+        <div className="flex gap-2">
+          {AIRPORTS.map((ap) => (
+            <button
+              key={ap.iata}
+              onClick={() => {
+                setAirport(ap.iata);
+                setResult(null);
+                setFlights([]);
+                setSelectedFlightId('');
+                setFlightsLoaded(false);
+                if (date) loadFlights(date, ap.iata);
+              }}
+              className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                airport === ap.iata
+                  ? 'bg-red-500 text-white'
+                  : 'bg-white text-gray-400 border border-gray-200'
+              }`}
+            >
+              {ap.label}
+            </button>
+          ))}
         </div>
 
         {/* 입력 카드 */}
