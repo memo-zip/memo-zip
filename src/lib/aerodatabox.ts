@@ -55,7 +55,7 @@ export async function fetchArrivals(airportIata: string, date: string) {
   };
   const params = 'withLeg=true&direction=Arrival&withCancelled=false&withCodeshared=false&withCargo=false&withPrivate=false';
   // DAD(IATA) → VVDN(ICAO) 변환
-  const icaoMap: Record<string, string> = { DAD: 'VVDN' };
+  const icaoMap: Record<string, string> = { DAD: 'VVDN', CXR: 'VVCR' };
   const icao = icaoMap[airportIata] ?? airportIata;
   const base = `https://aerodatabox.p.rapidapi.com/flights/airports/icao/${icao}`;
 
