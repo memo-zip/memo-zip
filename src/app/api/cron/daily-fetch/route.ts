@@ -1,10 +1,12 @@
 // Vercel Cron: 매일 UTC 15:00 (베트남 자정 +7) 실행
-// AeroDataBox로 14일 후 다낭 도착편 수집 + 파라타항공 자동 추가
+// AeroDataBox로 14일 후 다낭(DAD) + 나트랑(CXR) 도착편 수집 + 파라타항공 자동 추가
 import { NextResponse } from 'next/server';
 import { fetchArrivals } from '@/lib/aerodatabox';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export const maxDuration = 300;
+
+const AIRPORTS = ['DAD', 'CXR'];
 
 function getDateStr(offsetDays: number) {
   const d = new Date();
@@ -33,41 +35,47 @@ function buildParataairFlight(dateStr: string) {
   };
 }
 
+async function fetchAndUpsert(airport: string, date: string): Promise<{ count?: number; error?: string }> {
+  try {
+    const raw = await fetchArrivals(airport, date);
+    const seen = new Set<string>();
+    const flights = raw.filter(f => {
+      const key = `${f.flight_number}|${f.flight_date}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    if (airport === 'DAD' && isParataairDay(date) && !flights.find(f => f.flight_number === 'WE201')) {
+      flights.push(buildParataairFlight(date));
+    }
+
+    const { error } = await supabaseAdmin
+      .from('flights')
+      .upsert(flights, { onConflict: 'airport_iata,flight_number,flight_date' });
+
+    return error ? { error: error.message } : { count: flights.length };
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : 'unknown' };
+  }
+}
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const dateParam = searchParams.get('date');
+  const airportParam = searchParams.get('airport');
 
-  const dates = dateParam
-    ? [dateParam]
-    : [getDateStr(14)];
+  const dates = dateParam ? [dateParam] : [getDateStr(14)];
+  const airports = airportParam ? [airportParam] : AIRPORTS;
 
   const results: Record<string, unknown> = {};
 
   for (let i = 0; i < dates.length; i++) {
     const date = dates[i];
-    if (i > 0) await new Promise(r => setTimeout(r, 8000));
-    try {
-      const raw = await fetchArrivals('DAD', date);
-      const seen = new Set<string>();
-      const flights = raw.filter(f => {
-        const key = `${f.flight_number}|${f.flight_date}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
-
-      // 파라타항공 운항일이면 자동 추가 (AeroDataBox에 없는 항공사)
-      if (isParataairDay(date) && !flights.find(f => f.flight_number === 'WE201')) {
-        flights.push(buildParataairFlight(date));
-      }
-
-      const { error } = await supabaseAdmin
-        .from('flights')
-        .upsert(flights, { onConflict: 'airport_iata,flight_number,flight_date' });
-
-      results[date] = error ? { error: error.message } : { count: flights.length };
-    } catch (e) {
-      results[date] = { error: e instanceof Error ? e.message : 'unknown' };
+    for (let j = 0; j < airports.length; j++) {
+      if (i > 0 || j > 0) await new Promise(r => setTimeout(r, 8000));
+      const airport = airports[j];
+      results[`${airport}|${date}`] = await fetchAndUpsert(airport, date);
     }
   }
 
