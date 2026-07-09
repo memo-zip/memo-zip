@@ -118,7 +118,7 @@ export default function Home() {
         <div className="flex items-start justify-between">
           <div>
             <p className="text-sm font-black text-gray-900">메모집 🧳</p>
-            <h1 className="text-2xl font-black text-gray-900 leading-tight">다낭 패스트트랙<br />필요할까?</h1>
+            <h1 className="text-2xl font-black text-gray-900 leading-tight">베트남 패스트트랙<br />필요할까?</h1>
             <p className="text-xs text-gray-400 mt-1">실시간 입국 대기시간 예측 서비스</p>
           </div>
           <div className="flex flex-col items-end gap-1.5 mt-1">

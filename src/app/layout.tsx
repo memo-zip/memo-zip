@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "메모집 | 다낭 패스트트랙 필요할까?",
-  description: "다낭 공항 입국 혼잡도 분석 서비스",
+  title: "메모집 | 베트남 패스트트랙 필요할까?",
+  description: "베트남 공항 입국 혼잡도 분석 서비스",
 };
 
 export default function RootLayout({
