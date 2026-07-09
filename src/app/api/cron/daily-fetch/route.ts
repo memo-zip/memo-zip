@@ -65,7 +65,7 @@ export async function GET(req: Request) {
   const dateParam = searchParams.get('date');
   const airportParam = searchParams.get('airport');
 
-  const dates = dateParam ? [dateParam] : [getDateStr(14)];
+  const dates = dateParam ? [dateParam] : [getDateStr(30)];
   const airports = airportParam ? [airportParam] : AIRPORTS;
 
   const results: Record<string, unknown> = {};
